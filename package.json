@@ -1,0 +1,19 @@
+{
+  "name": "postcss-include",
+  "version": "0.0.1",
+  "description": "PostCSS plugin for annotations based including properties in other rule sets",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/morishitter/postcss-include/git"
+  },
+  "keywords": ["css","postcss","postcss-plugins"],
+  "author": "Masaaki Morishita",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+  }
+}

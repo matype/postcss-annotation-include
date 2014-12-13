@@ -1,6 +1,23 @@
-var test = require('colored-tape')
-var postcss-include = require('..')
+var fs = require('fs')
+var test = require('tape')
+var postcss = require('postcss')
+var include = require('..')
 
-test('description', function (t) {
-  t.end()
-})
+function fixture (name) {
+    return fs.readFileSync('test/fixtures/' + name + '.css', 'utf-8').trim()
+}
+
+function output (name) {
+    return fs.readFileSync('test/fixtures/' + name + '.out.css', 'utf-8').trim()
+}
+
+function compare (name) {
+    return test(name, function (t) {
+        var res = postcss().use(include(fixture(name))).process(fixture(name)).css.trim()
+        t.same(res, output(name))
+        t.end()
+    })
+}
+
+compare('test-1')
+compare('test-2')

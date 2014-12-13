@@ -1,0 +1,13 @@
+.base {
+  /*
+   * @base
+   */
+  color: red;
+}
+
+.foo {
+  /*
+   * @include .base
+   */
+  padding: 10px;
+}

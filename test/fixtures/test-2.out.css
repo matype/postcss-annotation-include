@@ -1,9 +1,9 @@
 .foo {
   /*
-   * @include .foo
+   * @include .base-1, .base-2
    */
+  font-size: 12px;
   color: red;
   padding: 10px;
-  font-size: 12px;
 }
 

@@ -84,15 +84,32 @@ module.exports = function plugin (css, options) {
         })
 
         root.each(function (rule) {
-            if (checkInclude(rule)) {
-                includeTmp.forEach(function (tmp) {
-                    tmp.decls.forEach(function (decl) {
-                        rule.append({
-                            prop: decl.prop,
-                            value: decl.value
+            if (rule.type === 'atrule') {
+                rule.childs.forEach(function (rule) {
+                    if (checkInclude(rule)) {
+                        includeTmp.forEach(function (tmp) {
+                            tmp.decls.forEach(function (decl) {
+                                rule.append({
+                                    prop: decl.prop,
+                                    value: decl.value
+                                })
+                            })
+                        })
+                    }
+
+                })
+            }
+            else {
+                if (checkInclude(rule)) {
+                    includeTmp.forEach(function (tmp) {
+                        tmp.decls.forEach(function (decl) {
+                            rule.append({
+                                prop: decl.prop,
+                                value: decl.value
+                            })
                         })
                     })
-                })
+                }
             }
         })
 

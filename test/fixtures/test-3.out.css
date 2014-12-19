@@ -1,0 +1,9 @@
+@media (min-width: 480px) {
+  .rule {
+    /*
+     * @include .base
+     */
+    font-size: 12px;
+    color: red;
+  }
+}

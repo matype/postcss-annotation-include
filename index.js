@@ -94,6 +94,7 @@ module.exports = function plugin (css, options) {
                                     value: decl.value
                                 })
                             })
+                            removeBase(root)
                         })
                     }
 
@@ -108,18 +109,22 @@ module.exports = function plugin (css, options) {
                                 value: decl.value
                             })
                         })
+                        removeBase(root)
                     })
                 }
             }
         })
 
-        root.each(function (rule) {
-            if (checkBase(rule)) rule.removeSelf()
-        })
-
         return root
 
     }
+}
+
+
+function removeBase (root) {
+    root.each(function (rule) {
+        if (checkBase(rule)) rule.removeSelf()
+    })
 }
 
 function checkBase (node) {

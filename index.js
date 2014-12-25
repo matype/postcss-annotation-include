@@ -123,7 +123,9 @@ module.exports = function plugin (css, options) {
 
 function removeBase (root) {
     root.each(function (rule) {
-        if (checkBase(rule)) rule.removeSelf()
+        if (checkBase(rule) && !rule.change) {
+            rule.removeSelf()
+        }
     })
 }
 

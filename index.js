@@ -68,7 +68,7 @@ module.exports = function plugin (css, options) {
         root.eachRule(function (rule) {
             if (checkBase(rule)) {
                 var decls = []
-                rule.childs.forEach(function (child) {
+                rule.nodes.forEach(function (child) {
                     if (child.type === 'decl') {
                         decls.push({
                             prop: child.prop,
@@ -85,7 +85,7 @@ module.exports = function plugin (css, options) {
 
         root.each(function (rule) {
             if (rule.type === 'atrule') {
-                rule.childs.forEach(function (rule) {
+                rule.nodes.forEach(function (rule) {
                     if (checkInclude(rule)) {
                         includeTmp.forEach(function (tmp) {
                             tmp.decls.forEach(function (decl) {
@@ -130,8 +130,8 @@ function removeBase (root) {
 }
 
 function checkBase (node) {
-    if (node.childs) {
-        var children = node.childs
+    if (node.nodes) {
+        var children = node.nodes
         var text = ''
         children.forEach(function (child) {
             if (child.type === 'comment') text = child.text
@@ -152,8 +152,8 @@ function baseRules (root) {
 }
 
 function checkInclude (node) {
-    if (node.childs) {
-        var children = node.childs
+    if (node.nodes) {
+        var children = node.nodes
         var text = ''
         children.forEach(function (child) {
             if (child.type === 'comment') text = child.text

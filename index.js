@@ -1,11 +1,14 @@
 var parse = require('css-annotation').parse
 
-module.exports = function plugin () {
+module.exports = function plugin (css) {
 
     return function (root) {
         var matchedRules = []
-
-        var annotations = parse(root)
+        
+        //ensure css object
+        css = css || root;
+        
+        var annotations = parse(css);
 
         root.eachRule(function (node) {
             if (checkInclude(node)) {

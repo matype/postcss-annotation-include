@@ -85,7 +85,7 @@ module.exports = function plugin (css, options) {
 
         root.each(function (rule) {
             if (rule.type === 'atrule') {
-                rule.nodes.forEach(function (rule) {
+                rules.nodes && rule.nodes.forEach(function (rule) {
                     if (checkInclude(rule)) {
                         includeTmp.forEach(function (tmp) {
                             tmp.decls.forEach(function (decl) {

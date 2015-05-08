@@ -20,7 +20,7 @@ var include = require('postcss-include')
 var css = fs.readFileSync('input.css', 'utf-8')
 
 var output = postcss(css)
-  .use(include(css))
+  .use(include())
   .process(css)
   .css
 ```

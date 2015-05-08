@@ -1,0 +1,26 @@
+.clearfix {
+  /*
+   * @base
+   */
+  clear: both;
+}
+
+
+.button {
+  /*
+   * @base
+   */
+  background: red;
+}
+
+.wrapper:after {
+  /*
+   * @include .clearfix
+   */
+}
+
+.wrapper .super-link {
+  /*
+   * @include .button
+   */
+}

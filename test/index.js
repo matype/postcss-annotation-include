@@ -22,3 +22,4 @@ function compare (name) {
 compare('test-1')
 compare('test-2')
 compare('test-3')
+compare('test-4')

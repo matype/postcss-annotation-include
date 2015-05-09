@@ -4,10 +4,10 @@ module.exports = function plugin (css) {
 
     return function (root) {
         var matchedRules = []
-        
+
         //ensure css object
         css = css || root;
-        
+
         var annotations = parse(css);
 
         root.eachRule(function (node) {
@@ -26,6 +26,7 @@ module.exports = function plugin (css) {
             }
         })
 
+
         var tmpMatched = []
         var newMatched = []
         matchedRules.forEach(function (matchedRule) {
@@ -42,7 +43,9 @@ module.exports = function plugin (css) {
             var isOne = true
             for (var j = i + 1; j < tmpMatched.length; j++) {
                 if (tmp.base === tmpMatched[j].base) {
-                    if (count) tmpSelectors.push(tmp.include)
+                    if (count) {
+                        tmpSelectors.push(tmp.include)
+                    }
                     tmpSelectors.push(tmpMatched[j].include)
                     count = false
                     isOne = false
@@ -85,36 +88,45 @@ module.exports = function plugin (css) {
             }
         })
 
-        root.each(function (rule) {
-            if (rule.type === 'atrule') {
-                rule.nodes.forEach(function (rule) {
-                    if (checkInclude(rule)) {
-                        includeTmp.forEach(function (tmp) {
-                            tmp.decls.forEach(function (decl) {
-                                rule.append({
-                                    prop: decl.prop,
-                                    value: decl.value
+        matchedRules.forEach(function (matchedRule) {
+            root.each(function (rule) {
+                rule.semicolon = true;
+                if (rule.type === 'atrule') {
+                    rule.nodes.forEach(function (rule) {
+                        if (checkInclude(rule)) {
+                            if (matchedRule.include === rule.selector) {
+                                includeTmp.forEach(function (tmp) {
+                                    if (tmp.selector === matchedRule.base && matchedRule.include === rule.selector) {
+                                    tmp.decls.forEach(function (decl) {
+                                        rule.append({
+                                            prop: decl.prop,
+                                            value: decl.value
+                                        })
+                                    })
+                                    removeBase(root)
+                                    }
                                 })
-                            })
-                            removeBase(root)
-                        })
-                    }
+                            }
+                        }
 
-                })
-            }
-            else {
-                if (checkInclude(rule)) {
-                    includeTmp.forEach(function (tmp) {
-                        tmp.decls.forEach(function (decl) {
-                            rule.append({
-                                prop: decl.prop,
-                                value: decl.value
-                            })
-                        })
-                        removeBase(root)
                     })
                 }
-            }
+                else {
+                    if (checkInclude(rule)) {
+                        includeTmp.forEach(function (tmp) {
+                            if (tmp.selector === matchedRule.base && matchedRule.include === rule.selector) {
+                                tmp.decls.forEach(function (decl) {
+                                    rule.append({
+                                        prop: decl.prop,
+                                        value: decl.value
+                                    })
+                                })
+                                removeBase(root)
+                            }
+                        })
+                    }
+                }
+            })
         })
 
         return root

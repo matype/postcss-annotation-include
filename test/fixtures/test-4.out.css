@@ -3,6 +3,7 @@
    * @include .clearfix
    */
   clear: both;
+  padding: 10px;
 }
 
 .wrapper .super-link {

@@ -1,12 +1,14 @@
 var parse = require('css-annotation').parse
 
-module.exports = function plugin (css) {
+module.exports = function plugin (options) {
+
+    options = options || {}
 
     return function (root) {
-        var matchedRules = []
+        css = options.css !== undefined ? options.css : root;
+        removeCheck = options.removeBase !== undefined ? options.removeBase :  true;
 
-        //ensure css object
-        css = css || root;
+        var matchedRules = []
 
         var annotations = parse(css);
 
@@ -103,7 +105,7 @@ module.exports = function plugin (css) {
                                             value: decl.value
                                         })
                                     })
-                                    removeBase(root)
+                                    if (removeCheck) removeBase(root)
                                     }
                                 })
                             }
@@ -121,7 +123,7 @@ module.exports = function plugin (css) {
                                         value: decl.value
                                     })
                                 })
-                                removeBase(root)
+                                if (removeCheck) removeBase(root)
                             }
                         })
                     }

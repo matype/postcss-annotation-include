@@ -63,6 +63,14 @@ You will get:
 }
 ```
 
+## Options
+
+### `options.css`
+Set your original CSS file. Default parameter is `root` object of PostCSS.
+
+### `options.removeBase`
+The flag wheather remove `@base` rules. Default parameter is `true`.
+
 
 ## License
 

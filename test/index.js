@@ -13,7 +13,14 @@ function output (name) {
 
 function compare (name) {
     return test(name, function (t) {
-        var res = postcss().use(include(fixture(name))).process(fixture(name)).css.trim()
+        var options = {
+            //removeBase: false
+        }
+        var res = postcss()
+                    .use(include(options))
+                    .process(fixture(name))
+                    .css.trim();
+
         t.same(res, output(name))
         t.end()
     })

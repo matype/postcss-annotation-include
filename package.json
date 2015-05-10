@@ -1,6 +1,6 @@
 {
   "name": "postcss-include",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "PostCSS plugin for annotations based including properties in other rule sets",
   "main": "index.js",
   "scripts": {

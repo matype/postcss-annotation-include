@@ -139,8 +139,15 @@ module.exports = function plugin (options) {
 
 function removeBase (root) {
     root.each(function (rule) {
-        if (checkBase(rule) && !rule.change) {
+        if (rule.type === 'rule' && checkBase(rule) && !rule.change) {
             rule.removeSelf()
+        }
+        if (rule.type === 'atrule') {
+            rule.each(function (node) {
+                if (node.type === 'rule' && checkBase(node)) {
+                    node.removeSelf()
+                }
+            })
         }
     })
 }

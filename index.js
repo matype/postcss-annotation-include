@@ -92,19 +92,13 @@ module.exports = function plugin (options) {
 
         matchedRules.forEach(function (matchedRule) {
             root.walk(function (rule) {
-                rule.semicolon = true;
+                rule.raws.semicolon = true;
                 if (rule.type === 'atrule') {
                     rule.nodes.forEach(function (rule) {
                         if (checkInclude(rule)) {
                             if (matchedRule.include === rule.selector) {
                                 includeTmp.forEach(function (tmp) {
                                     if (tmp.selector === matchedRule.base && matchedRule.include === rule.selector) {
-                                    tmp.decls.forEach(function (decl) {
-                                        rule.append({
-                                            prop: decl.prop,
-                                            value: decl.value
-                                        })
-                                    })
                                     if (removeCheck) removeBase(root)
                                     }
                                 })
@@ -140,12 +134,12 @@ module.exports = function plugin (options) {
 function removeBase (root) {
     root.walk(function (rule) {
         if (rule.type === 'rule' && checkBase(rule) && !rule.change) {
-            rule.removeSelf()
+            rule.remove()
         }
         if (rule.type === 'atrule') {
             rule.walk(function (node) {
                 if (node.type === 'rule' && checkBase(node)) {
-                    node.removeSelf()
+                    node.remove()
                 }
             })
         }

@@ -1,4 +1,4 @@
-# postcss-include [![Build Status](https://travis-ci.org/morishitter/postcss-include.svg)](https://travis-ci.org/morishitter/postcss-include)
+# postcss-annotation-include [![Build Status](https://travis-ci.org/morishitter/postcss-annotation-include.svg)](https://travis-ci.org/morishitter/postcss-annotation-include)
 
 PostCSS plugin for annotations based including properties in other rule sets.
 
@@ -7,7 +7,7 @@ Using this plugin, can use inline expanding property declarations of other rules
 ## Installation
 
 ```shell
-$ npm install postcss-include
+$ npm install postcss-annotation-include
 ```
 
 ## Example
@@ -15,7 +15,7 @@ $ npm install postcss-include
 ```js
 var fs = require('fs')
 var postcss = require('postcss')
-var include = require('postcss-include')
+var include = require('postcss-annotation-include')
 
 var css = fs.readFileSync('input.css', 'utf-8')
 

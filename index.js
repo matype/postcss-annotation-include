@@ -12,7 +12,7 @@ module.exports = function plugin (options) {
 
         var annotations = parse(css);
 
-        root.eachRule(function (node) {
+        root.walkRules(function (node) {
             if (checkInclude(node)) {
                 annotations.forEach(function (annotation) {
                     if (node.selector === annotation.rule) {
@@ -72,7 +72,7 @@ module.exports = function plugin (options) {
 
 
         includeTmp = []
-        root.eachRule(function (rule) {
+        root.walkRules(function (rule) {
             if (checkBase(rule)) {
                 var decls = []
                 rule.nodes.forEach(function (child) {
@@ -91,20 +91,14 @@ module.exports = function plugin (options) {
         })
 
         matchedRules.forEach(function (matchedRule) {
-            root.each(function (rule) {
-                rule.semicolon = true;
+            root.walk(function (rule) {
+                rule.raws.semicolon = true;
                 if (rule.type === 'atrule') {
                     rule.nodes.forEach(function (rule) {
                         if (checkInclude(rule)) {
                             if (matchedRule.include === rule.selector) {
                                 includeTmp.forEach(function (tmp) {
                                     if (tmp.selector === matchedRule.base && matchedRule.include === rule.selector) {
-                                    tmp.decls.forEach(function (decl) {
-                                        rule.append({
-                                            prop: decl.prop,
-                                            value: decl.value
-                                        })
-                                    })
                                     if (removeCheck) removeBase(root)
                                     }
                                 })
@@ -138,14 +132,14 @@ module.exports = function plugin (options) {
 
 
 function removeBase (root) {
-    root.each(function (rule) {
+    root.walk(function (rule) {
         if (rule.type === 'rule' && checkBase(rule) && !rule.change) {
-            rule.removeSelf()
+            rule.remove()
         }
         if (rule.type === 'atrule') {
-            rule.each(function (node) {
+            rule.walk(function (node) {
                 if (node.type === 'rule' && checkBase(node)) {
-                    node.removeSelf()
+                    node.remove()
                 }
             })
         }
@@ -166,7 +160,7 @@ function checkBase (node) {
 
 function baseRules (root) {
     var baseRules = []
-    root.eachRule(function (rule) {
+    root.walkRules(function (rule) {
         if (checkBase(rule)) {
             baseRules.push(rule)
         }
@@ -188,7 +182,7 @@ function checkInclude (node) {
 
 function includeRules (root) {
     var includeRules = []
-    root.eachRule(function (rule) {
+    root.walkRules(function (rule) {
         if (checkInclude(rule)) {
             includeRules.push(rule)
         }
